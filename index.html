@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dépanneurs Privés - Débouchage, pompage & inspection 24h/24</title>
+    <link rel="icon" type="image/png" href="assets/logo.png">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Anton:400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+    /* === Modal RDV en ligne === */
+    .modal-rdv-bg {
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        width: 100vw; height: 100vh;
+        background: rgba(22,25,34,0.45);
+        backdrop-filter: blur(4px);
+        z-index: 9999;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        transition: opacity 0.3s;
+    }
+    .modal-rdv-bg.active { display: flex; }
+    .modal-rdv {
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 8px 40px #0002;
+        padding: 2.5rem 2.5rem 2rem 2.5rem;
+        max-width: 600px;
+        width: 95vw;
+        position: relative;
+        animation: modalIn 0.35s cubic-bezier(.4,0,.2,1);
+    }
+    @keyframes modalIn {
+        0% { opacity: 0; transform: scale(0.95) translateY(40px); }
+        100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .modal-close {
+        position: absolute;
+        top: 18px; right: 18px;
+        background: none;
+        border: none;
+        font-size: 2rem;
+        color: #aaa;
+        cursor: pointer;
+        transition: color 0.2s;
+        z-index: 2;
+    }
+    .modal-close:hover { color: #FD4A36; }
+    .modal-form {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.2rem 2rem;
+    }
+    .modal-form-row {
+        flex: 1 1 45%;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 0.5rem;
+    }
+    .modal-form-row.full {
+        flex: 1 1 100%;
+    }
+    .modal-form label {
+        font-family: 'Montserrat', Arial, sans-serif;
+        font-size: 1.08rem;
+        color: #222;
+        margin-bottom: 0.3rem;
+        font-weight: 600;
+    }
+    .modal-form input, .modal-form select, .modal-form textarea {
+        background: #f3f3f3;
+        border: none;
+        border-radius: 10px;
+        padding: 0.9rem 1.1rem;
+        font-size: 1.08rem;
+        font-family: 'Montserrat', Arial, sans-serif;
+        margin-bottom: 0.2rem;
+        color: #222;
+        outline: none;
+        transition: box-shadow 0.2s, border 0.2s;
+        box-shadow: 0 1px 4px #0001;
+        resize: none;
+    }
+    .modal-form input:focus, .modal-form select:focus, .modal-form textarea:focus {
+        box-shadow: 0 2px 8px #fd4a3620;
+        border: 1.5px solid #FD4A36;
+    }
+    .modal-form textarea {
+        min-height: 90px;
+        max-height: 200px;
+    }
+    .modal-form .modal-btn {
+        background: #FFD600;
+        color: #222;
+        border: none;
+        border-radius: 10px;
+        padding: 1.1rem 0;
+        font-family: 'Montserrat', Arial, sans-serif;
+        font-size: 1.15rem;
+        font-weight: 700;
+        width: 100%;
+        margin-top: 1.2rem;
+        cursor: pointer;
+        transition: background 0.2s, color 0.2s;
+        box-shadow: 0 2px 8px #fd4a3620;
+    }
+    .modal-form .modal-btn:hover {
+        background: #FD4A36;
+        color: #fff;
+    }
+    @media (max-width: 600px) {
+        .modal-rdv { padding: 1.2rem 0.5rem 1rem 0.5rem; }
+        .modal-form-row { flex: 1 1 100%; }
+    }
+    </style>
+    <script>
+    // Animation au scroll (Intersection Observer)
+    document.addEventListener('DOMContentLoaded', function() {
+        const animatedEls = document.querySelectorAll('.animated, .animated-title, .animated-left, .animated-right, .animated-scale, .animated-fade');
+        const observer = new window.IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+        animatedEls.forEach(el => observer.observe(el));
+
+        // Animation focus orange sur les why-card
+        const whyCards = document.querySelectorAll('.why-card');
+        let current = 0;
+        function updateFocus() {
+            whyCards.forEach((card, idx) => {
+                if(idx === current) card.classList.add('focus-orange');
+                else card.classList.remove('focus-orange');
+            });
+            current = (current + 1) % whyCards.length;
+        }
+        if(whyCards.length > 0) {
+            updateFocus();
+            setInterval(updateFocus, 2000);
+        }
+
+        // Modal RDV en ligne
+        const btnRdv = document.querySelector('.btn-secondary');
+        const btnContact = document.querySelector('.nav-links a[href="#contact"]');
+        const modalBg = document.getElementById('modalRdvBg');
+        const modalClose = document.getElementById('modalRdvClose');
+        function openModalRdv(e) {
+            if(e) e.preventDefault();
+            modalBg.classList.add('active');
+        }
+        if(btnRdv && modalBg && modalClose) {
+            btnRdv.addEventListener('click', openModalRdv);
+            modalClose.addEventListener('click', function() {
+                modalBg.classList.remove('active');
+            });
+            modalBg.addEventListener('click', function(e) {
+                if(e.target === modalBg) modalBg.classList.remove('active');
+            });
+            document.addEventListener('keydown', function(e) {
+                if(e.key === 'Escape') modalBg.classList.remove('active');
+            });
+        }        if(btnContact && modalBg) {
+            btnContact.addEventListener('click', openModalRdv);
+        }
+
+        // Menu mobile toggle
+        const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        if(mobileMenuToggle && navLinks) {
+            mobileMenuToggle.addEventListener('click', function() {
+                mobileMenuToggle.classList.toggle('active');
+                navLinks.classList.toggle('active');
+            });
+            
+            // Fermer le menu mobile lors du clic sur un lien
+            const navLinksItems = document.querySelectorAll('.nav-links a');
+            navLinksItems.forEach(link => {
+                link.addEventListener('click', function() {
+                    mobileMenuToggle.classList.remove('active');
+                    navLinks.classList.remove('active');
+                });
+            });
+            
+            // Fermer le menu mobile lors du clic en dehors
+            document.addEventListener('click', function(e) {
+                if (!mobileMenuToggle.contains(e.target) && !navLinks.contains(e.target)) {
+                    mobileMenuToggle.classList.remove('active');
+                    navLinks.classList.remove('active');
+                }
+            });
+        }
+    });
+    </script>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar animated-fade">
+        <div class="container nav-content wide-navbar">
+            <div class="logo-block animated-left">
+                <img src="assets/logo-bg-txt.png" alt="Dépanneurs Privés Assainissement" class="logo-img">
+            </div>
+            <ul class="nav-links animated">
+                <li><a href="index.html" class="active">Accueil</a></li>
+                <li><a href="services.html">Nos Services</a></li>
+                <li><a href="zones.html">Zones d’intervention</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="nav-actions animated-right">
+                <button class="mobile-menu-toggle" aria-label="Menu mobile">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <a href="https://wa.me/33782184243" class="btn-whatsapp" aria-label="WhatsApp" target="_blank"><img src="assets/icons-whatsapp.png" alt="WhatsApp" style="height:24px;width:24px;"></a>
+                <a href="tel:0782184243" class="btn-urgence">URGENCE 24/7 <span class="arrow">&gt;</span></a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero animated">
+        <div class="hero-bg-shape"></div>
+        <div class="container hero-content">
+            <h1 class="hero-title animated-title">Débouchage, pompage & inspection TV<br>24h/24</h1>
+            <p class="hero-subtitle animated"> <b>Canalisations bouchées ? On intervient immédiatement !</b></p>
+            <div class="hero-buttons animated">
+                <a href="#contact" class="btn-main">APPEL URGENT <span class="arrow">&gt;</span></a>
+                <a href="#" class="btn-secondary">RDV EN LIGNE <span class="arrow">&gt;</span><span class="arrow">&gt;</span></a>
+            </div>
+            <div class="video-overlap-wrapper animated-scale">
+                <img src="assets/video.jpeg" alt="Vidéo intervention" class="hero-video-img">
+                <span class="hero-video-play"><svg width="48" height="48" viewBox="0 0 48 48"><circle cx="24" cy="24" r="24" fill="#fff"/><polygon points="20,16 34,24 20,32" fill="#FD4A36"/></svg></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Services Section -->
+    <section id="services" class="services animated">
+        <div class="container">
+            <h2 class="services-title animated-title">NOS SERVICES & DÉPANNAGES <br>24H/24 - 7J/7</h2>
+            <div class="services-grid">
+                <div class="service-card service-red animated-scale" style="transition-delay:0.1s;">
+                    <div class="service-icon"><img src="assets/icones/debouchage-icone.png" alt="Débouchage"></div>
+                    <div class="service-content">
+                        <h3>DÉBOUCHAGE</h3>
+                        <p>WC, éviers, douches, colonnes, égouts...<br>Intervention rapide tous types de bouchons</p>
+                    </div>
+                </div>
+                <div class="service-card service-red animated-scale" style="transition-delay:0.2s;">
+                    <div class="service-icon"><img src="assets/icones/pompage-icone.png" alt="Pompage"></div>
+                    <div class="service-content">
+                        <h3>POMPAGE</h3>
+                        <p>Fosses septiques, bacs à graisse, regards, caves...<br>Camions adaptés aux situations complexes</p>
+                    </div>
+                </div>
+                <div class="service-card animated-scale" style="transition-delay:0.3s;">
+                    <div class="service-icon"><img src="assets/icones/curage-icone.png" alt="Curage"></div>
+                    <div class="service-content">
+                        <h3>CURAGE</h3>
+                        <p>Nettoyage haute pression des canalisations<br>Préventif ou curatif, sur devis</p>
+                    </div>
+                </div>
+                <div class="service-card animated-scale" style="transition-delay:0.4s;">
+                    <div class="service-icon"><img src="assets/icones/camera-inspection-icone.png" alt="Caméra d'inspection"></div>
+                    <div class="service-content">
+                        <h3>Caméra d’inspection</h3>
+                        <p>Diagnostic sans casse<br>Détection de fissures, racines, engorgements...</p>
+                    </div>
+                </div>
+                <div class="service-card service-red animated-scale" style="transition-delay:0.5s;">
+                    <div class="service-icon"><img src="assets/icones/bac-graisse-icone.png" alt="Bac à graisse"></div>
+                    <div class="service-content">
+                        <h3>BAC À GRAISSE</h3>
+                        <p>Installation, entretien, pompage et nettoyage<br>Pour particuliers et pros</p>
+                    </div>
+                </div>
+                <div class="service-card animated-scale" style="transition-delay:0.6s;">
+                    <div class="service-icon"><img src="assets/icones/travaux-icone.png" alt="Travaux d’assainissement"></div>
+                    <div class="service-content">
+                        <h3>TRAVAUX D’ASSAINISSEMENT</h3>
+                        <p>Tout-à-l’égout, fosses, pompes de relevage...<br>Étude personnalisée, devis rapide</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Qui sommes-nous Section -->
+    <section class="about about-overlap animated">
+        <div class="container about-content">
+            <div class="about-img animated-left">
+                <img src="assets/vehicule-DP.jpg" alt="Véhicule d'intervention">
+            </div>
+            <div class="about-text animated-right">
+                <h2>Qui sommes-nous ?</h2>
+                <p>Des professionnels de l’assainissement engagés et proches de vous.<br>
+                Notre entreprise intervient 7J/7 pour résoudre tous vos problèmes de canalisations, avec sérieux et efficacité.<br>
+                Nous mettons un point d'honneur à offrir un service humain, réactif et transparent.<br>
+                <span style="font-size:1.1em;">👉 Une équipe locale, expérimentée, à votre écoute.</span></p>
+                <button class="about-btn animated-scale">SAVOIR +</button>
+                <div class="about-logos animated-fade">
+                    <img src="assets/partenaires.png" alt="Partenaires" class="about-partenaires-img">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Zones d'intervention Section -->
+    <section id="zones" class="zones animated">
+        <div class="container zones-content">
+            <div class="zones-text animated-left">
+                <h2 class="zones-title animated-title">Zones d’intervention</h2>
+                <div class="zones-desc animated">
+                    <span class="zones-icon">
+                        <svg width="40" height="40" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="13" r="6" stroke="#222" stroke-width="2"/><path d="M16 29C16 29 26 20.5 26 13C26 7.47715 21.5228 3 16 3C10.4772 3 6 7.47715 6 13C6 20.5 16 29 16 29Z" stroke="#222" stroke-width="2"/></svg>
+                    </span>
+                    <div class="zones-text-desc">
+                        Nous intervenons principalement en Île-de-France, mais nos équipes sont mobiles et peuvent intervenir partout en France
+                    </div>
+                </div>
+            </div>
+            <div class="zones-map animated-right">
+                <iframe class="zones-map-iframe" src="https://www.google.com/maps?q=Île-de-France,France&hl=fr&z=8&output=embed" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Contact Etapes -->
+    <section class="contact-steps animated">
+        <div class="contact-steps-bg"></div>
+        <div class="container contact-steps-content">
+            <h2 class="contact-steps-title animated-title">Nous contacter</h2>
+            <div class="contact-steps-grid">
+                <div class="contact-step-card animated-scale" style="transition-delay:0.1s;">
+                    <div class="contact-step-icon-bg">
+                        <img src="assets/icones/workers.png" alt="Etape 1" class="contact-step-icon">
+                    </div>
+                    <div class="contact-step-text">
+                        <div class="contact-step-title">Etape 01</div>
+                        <div class="contact-step-desc">Prise de contact par téléphone ou via WhatsApp.</div>
+                    </div>
+                </div>
+                <div class="contact-step-card animated-scale" style="transition-delay:0.2s;">
+                    <div class="contact-step-icon-bg">
+                        <img src="assets/icones/workers.png" alt="Etape 2" class="contact-step-icon">
+                    </div>
+                    <div class="contact-step-text">
+                        <div class="contact-step-title">Etape 02</div>
+                        <div class="contact-step-desc">Diagnostic rapide<br>Un technicien identifie le problème (à distance ou sur place).</div>
+                    </div>
+                </div>
+                <div class="contact-step-card animated-scale" style="transition-delay:0.3s;">
+                    <div class="contact-step-icon-bg">
+                        <img src="assets/icones/workers.png" alt="Etape 3" class="contact-step-icon">
+                    </div>
+                    <div class="contact-step-text">
+                        <div class="contact-step-title">Etape 03</div>
+                        <div class="contact-step-desc">Intervention efficace<br>Nous intervenons avec le matériel adapté, en toute transparence.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pourquoi nous choisir Section -->
+    <section class="why animated">
+        <div class="container why-content">
+            <h2 class="why-title animated-title">Pourquoi nous choisir ?</h2>
+    <div class="why-grid">
+        <div class="why-card animated-scale" style="transition-delay:0.1s;">
+            <h3>Intervention rapide</h3>
+            <p>Disponible 24h/24 – 7j/7</p>
+        </div>
+        <div class="why-card why-center animated-scale" style="transition-delay:0.2s;">
+            <h3>Travail soigné</h3>
+            <p>Pas de solutions bâclées<br>souci du détail</p>
+        </div>
+        <div class="why-card animated-scale" style="transition-delay:0.3s;">
+            <h3>Techniciens qualifiés</h3>
+            <p>Expérience &amp; matériel professionnel</p>
+        </div>
+    </div>
+        </div>
+    </section>
+
+    <!-- Modal RDV en ligne -->
+    <div class="modal-rdv-bg" id="modalRdvBg">
+      <div class="modal-rdv">
+        <button class="modal-close" id="modalRdvClose" aria-label="Fermer">&times;</button>
+        <form class="modal-form" autocomplete="off">
+          <div class="modal-form-row">
+            <label for="rdv-nom">Nom</label>
+            <input type="text" id="rdv-nom" name="nom" placeholder="Nom" required>
+          </div>
+          <div class="modal-form-row">
+            <label for="rdv-email">Email</label>
+            <input type="email" id="rdv-email" name="email" placeholder="Votre adresse email" required>
+          </div>
+          <div class="modal-form-row">
+            <label for="rdv-tel">Téléphone</label>
+            <input type="tel" id="rdv-tel" name="tel" placeholder="0122336448" required pattern="[0-9 ]+">
+          </div>
+          <div class="modal-form-row">
+            <label for="rdv-objet">Sélectionnez un objet</label>
+            <select id="rdv-objet" name="objet" required>
+              <option value="">Sélectionnez un objet</option>
+              <option value="devis">Demande de devis</option>
+              <option value="rdv">Prendre un rendez-vous</option>
+              <option value="urgence">Urgence</option>
+              <option value="autre">Autre</option>
+            </select>
+          </div>
+          <div class="modal-form-row full">
+            <label for="rdv-message">Message</label>
+            <textarea id="rdv-message" name="message" placeholder="Votre message..." required></textarea>
+          </div>
+          <div class="modal-form-row full">
+            <button type="submit" class="modal-btn">ENVOYER &gt;</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer animated-fade">
+        <div class="container footer-content">
+            <div class="footer-left animated-left" style="display: flex; align-items: flex-start; gap: 0; flex: 1;">
+                <img src="assets/logo-bg-black.png" alt="Dépanneurs Privés" class="footer-logo-img" style="margin-bottom:0;">
+            </div>
+            <div class="footer-right animated-right" style="display: flex; flex-direction: column; align-items: flex-start; gap: 0.5rem;">
+                <div class="footer-contact-row">
+                    <span class="footer-icon"><img src="assets/icones/icon-localisation.png" alt="Localisation" style="width:22px;height:22px;"></span>
+                    <span>4 Avenue Lelièvre, 93600<br>Aulnay-sous-Bois</span>
+                </div>
+                <div class="footer-contact-row">
+                    <span class="footer-icon"><img src="assets/icones/icon-tel.png" alt="Téléphone" style="width:22px;height:22px;"></span>
+                    <span>01 80 27 20 27</span>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bar animated-fade">
+            <div class="footer-bar-left">2025 COPYRIGHT DÉPANNEURS PRIVÉS</div>
+            <div class="footer-bar-links">
+                <a href="#">MENTIONS LÉGALES</a>
+                <a href="#">GESTION DES COOKIES</a>
+                <a href="#">POLITIQUE DE CONFIDENTIALITÉ</a>
+                <a href="#">CONDITIONS GÉNÉRALES D'UTILISATION</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

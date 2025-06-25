@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zones d'intervention - Dépanneurs Privés Assainissement</title>
+    <link rel="icon" type="image/png" href="assets/logo.png">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Anton:400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+    /* === Modal RDV en ligne === */
+    .modal-rdv-bg {
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        width: 100vw; height: 100vh;
+        background: rgba(22,25,34,0.45);
+        backdrop-filter: blur(4px);
+        z-index: 9999;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        transition: opacity 0.3s;
+    }
+    .modal-rdv-bg.active { display: flex; }
+    .modal-rdv {
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 8px 40px #0002;
+        padding: 2.5rem 2.5rem 2rem 2.5rem;
+        max-width: 600px;
+        width: 95vw;
+        position: relative;
+        animation: modalIn 0.35s cubic-bezier(.4,0,.2,1);
+    }
+    @keyframes modalIn {
+        0% { opacity: 0; transform: scale(0.95) translateY(40px); }
+        100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .modal-close {
+        position: absolute;
+        top: 18px; right: 18px;
+        background: none;
+        border: none;
+        font-size: 2rem;
+        color: #aaa;
+        cursor: pointer;
+        transition: color 0.2s;
+        z-index: 2;
+    }
+    .modal-close:hover { color: #FD4A36; }
+    .modal-form {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.2rem 2rem;
+    }
+    .modal-form-row {
+        flex: 1 1 45%;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 0.5rem;
+    }
+    .modal-form-row.full {
+        flex: 1 1 100%;
+    }
+    .modal-form label {
+        font-family: 'Montserrat', Arial, sans-serif;
+        font-size: 1.08rem;
+        color: #222;
+        margin-bottom: 0.3rem;
+        font-weight: 600;
+    }
+    .modal-form input, .modal-form select, .modal-form textarea {
+        background: #f3f3f3;
+        border: none;
+        border-radius: 10px;
+        padding: 0.9rem 1.1rem;
+        font-size: 1.08rem;
+        font-family: 'Montserrat', Arial, sans-serif;
+        margin-bottom: 0.2rem;
+        color: #222;
+        outline: none;
+        transition: box-shadow 0.2s, border 0.2s;
+        box-shadow: 0 1px 4px #0001;
+        resize: none;
+    }
+    .modal-form input:focus, .modal-form select:focus, .modal-form textarea:focus {
+        box-shadow: 0 2px 8px #fd4a3620;
+        border: 1.5px solid #FD4A36;
+    }
+    .modal-form textarea {
+        min-height: 90px;
+        max-height: 200px;
+    }
+    .modal-form .modal-btn {
+        background: #FFD600;
+        color: #222;
+        border: none;
+        border-radius: 10px;
+        padding: 1.1rem 0;
+        font-family: 'Montserrat', Arial, sans-serif;
+        font-size: 1.15rem;
+        font-weight: 700;
+        width: 100%;
+        margin-top: 1.2rem;
+        cursor: pointer;
+        transition: background 0.2s, color 0.2s;
+        box-shadow: 0 2px 8px #fd4a3620;
+    }
+    .modal-form .modal-btn:hover {
+        background: #FD4A36;
+        color: #fff;
+    }
+    @media (max-width: 600px) {
+        .modal-rdv { padding: 1.2rem 0.5rem 1rem 0.5rem; }
+        .modal-form-row { flex: 1 1 100%; }
+    }
+
+    </style>
+    <script>
+    // Animation au scroll (Intersection Observer)
+    document.addEventListener('DOMContentLoaded', function() {
+        const animatedEls = document.querySelectorAll('.animated, .animated-title, .animated-left, .animated-right, .animated-scale, .animated-fade, .zone-card, .animated-zones');
+        const observer = new window.IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    // Ajouter un délai progressif pour les cartes de zones
+                    if (entry.target.classList.contains('zone-card')) {
+                        setTimeout(() => {
+                            entry.target.classList.add('visible');
+                        }, index * 200);
+                    } else {
+                        entry.target.classList.add('visible');
+                    }
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+        animatedEls.forEach(el => observer.observe(el));        // Modal RDV en ligne
+        const btnRdv = document.querySelector('.btn-secondary');
+        const btnContact = document.querySelector('.nav-links a[href="index.html#contact"]');
+        const modalBg = document.getElementById('modalRdvBg');
+        const modalClose = document.getElementById('modalRdvClose');
+        function openModalRdv(e) {
+            if(e) e.preventDefault();
+            modalBg.classList.add('active');
+        }
+        if(btnRdv && modalBg && modalClose) {
+            btnRdv.addEventListener('click', openModalRdv);
+            modalClose.addEventListener('click', function() {
+                modalBg.classList.remove('active');
+            });
+            modalBg.addEventListener('click', function(e) {
+                if(e.target === modalBg) modalBg.classList.remove('active');
+            });
+            document.addEventListener('keydown', function(e) {
+                if(e.key === 'Escape') modalBg.classList.remove('active');
+            });
+        }        if(btnContact && modalBg) {
+            btnContact.addEventListener('click', openModalRdv);
+        }
+
+        // Menu mobile toggle
+        const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        if(mobileMenuToggle && navLinks) {
+            mobileMenuToggle.addEventListener('click', function() {
+                mobileMenuToggle.classList.toggle('active');
+                navLinks.classList.toggle('active');
+            });
+            
+            // Fermer le menu mobile lors du clic sur un lien
+            const navLinksItems = document.querySelectorAll('.nav-links a');
+            navLinksItems.forEach(link => {
+                link.addEventListener('click', function() {
+                    mobileMenuToggle.classList.remove('active');
+                    navLinks.classList.remove('active');
+                });
+            });
+            
+            // Fermer le menu mobile lors du clic en dehors
+            document.addEventListener('click', function(e) {
+                if (!mobileMenuToggle.contains(e.target) && !navLinks.contains(e.target)) {
+                    mobileMenuToggle.classList.remove('active');
+                    navLinks.classList.remove('active');
+                }
+            });
+        }
+    });
+    </script>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar animated-fade">
+        <div class="container nav-content wide-navbar">
+            <div class="logo-block animated-left">
+                <img src="assets/logo-bg-txt.png" alt="Dépanneurs Privés Assainissement" class="logo-img">
+            </div>            <ul class="nav-links animated">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="services.html">Nos Services</a></li>
+                <li><a href="zones.html" class="active">Zones d'intervention</a></li>
+                <li><a href="index.html#contact">Contact</a></li>            </ul>
+            <div class="nav-actions animated-right">
+                <button class="mobile-menu-toggle" aria-label="Menu mobile">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <a href="https://wa.me/33782184243" class="btn-whatsapp" aria-label="WhatsApp" target="_blank"><img src="assets/icons-whatsapp.png" alt="WhatsApp" style="height:24px;width:24px;"></a>
+                <a href="tel:0782184243" class="btn-urgence">URGENCE 24/7 <span class="arrow">&gt;</span></a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Zones Hero Section -->
+    <header class="zones-hero">
+        <div class="container">
+            <div class="zones-hero-content">
+                <h1 class="zones-hero-title">Zones d'intervention</h1>
+                <p class="zones-hero-subtitle">Nous intervenons partout en Île-de-France et départements limitrophes</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Zones Banner -->
+    <div class="zones-banner">
+        <!-- Texte géré par CSS avec animation de défilement -->
+    </div>
+
+    <!-- Zones Main Section -->
+  <!--   <section class="zones-main-section animated">
+        <div class="container">
+            <h2 class="zones-main-title animated-title">🗺️ Nos zones d'intervention détaillées</h2>
+            <div class="zones-grid">
+                <div class="zone-card featured animated-zones" style="transition-delay:0.1s;">
+                    <div class="zone-number">75</div>
+                    <h3 class="zone-title">PARIS</h3>
+                    <p class="zone-description">Intervention prioritaire dans tous les arrondissements de Paris, 24h/24 et 7j/7.</p>
+                    <ul class="zone-cities">
+                        <li>1er arr.</li>
+                        <li>2ème arr.</li>
+                        <li>3ème arr.</li>
+                        <li>4ème arr.</li>
+                        <li>5ème arr.</li>
+                        <li>Et tous les autres</li>
+                    </ul>
+                </div>
+
+                <div class="zone-card animated-zones" style="transition-delay:0.2s;">
+                    <div class="zone-number">92</div>
+                    <h3 class="zone-title">HAUTS-DE-SEINE</h3>
+                    <p class="zone-description">Couverture complète du département avec équipes spécialisées.</p>
+                    <ul class="zone-cities">
+                        <li>Boulogne</li>
+                        <li>Levallois</li>
+                        <li>Neuilly</li>
+                        <li>Nanterre</li>
+                        <li>Courbevoie</li>
+                        <li>Et toutes communes</li>
+                    </ul>
+                </div>
+
+                <div class="zone-card animated-zones" style="transition-delay:0.3s;">
+                    <div class="zone-number">93</div>
+                    <h3 class="zone-title">SEINE-SAINT-DENIS</h3>
+                    <p class="zone-description">Zone de référence, siège de notre entreprise à Aulnay-sous-Bois.</p>
+                    <ul class="zone-cities">
+                        <li>Aulnay-sous-Bois</li>
+                        <li>Saint-Denis</li>
+                        <li>Montreuil</li>
+                        <li>Bobigny</li>
+                        <li>Pantin</li>
+                        <li>Et toutes communes</li>
+                    </ul>
+                </div>
+
+                <div class="zone-card animated-zones" style="transition-delay:0.4s;">
+                    <div class="zone-number">94</div>
+                    <h3 class="zone-title">VAL-DE-MARNE</h3>
+                    <p class="zone-description">Intervention rapide dans tout le département.</p>
+                    <ul class="zone-cities">
+                        <li>Créteil</li>
+                        <li>Vitry-sur-Seine</li>
+                        <li>Saint-Maur</li>
+                        <li>Vincennes</li>
+                        <li>Nogent</li>
+                        <li>Et toutes communes</li>
+                    </ul>
+                </div>
+
+                <div class="zone-card animated-zones" style="transition-delay:0.5s;">
+                    <div class="zone-number">91</div>
+                    <h3 class="zone-title">ESSONNE</h3>
+                    <p class="zone-description">Service complet sur demande avec équipes mobiles.</p>
+                    <ul class="zone-cities">
+                        <li>Évry</li>
+                        <li>Corbeil</li>
+                        <li>Palaiseau</li>
+                        <li>Massy</li>
+                        <li>Sainte-Geneviève</li>
+                        <li>Et toutes communes</li>
+                    </ul>
+                </div>
+
+                <div class="zone-card animated-zones" style="transition-delay:0.6s;">
+                    <div class="zone-number">77</div>
+                    <h3 class="zone-title">SEINE-ET-MARNE</h3>
+                    <p class="zone-description">Intervention sur les principales villes et zones urbaines.</p>
+                    <ul class="zone-cities">
+                        <li>Meaux</li>
+                        <li>Melun</li>
+                        <li>Chelles</li>
+                        <li>Pontault</li>
+                        <li>Torcy</li>
+                        <li>Et zones urbaines</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- Large Map Section -->
+    <section class="zones-map-section animated">
+        <div class="zones-map-large">
+            <h2 class="zones-map-title animated-title">Carte interactive de nos zones</h2>
+            <iframe class="zones-map-iframe-large animated-scale" src="https://www.google.com/maps?q=Île-de-France,France&hl=fr&z=9&output=embed" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+    </section>
+
+    <!-- Section Urgence -->
+    <section class="urgence-section animated">
+        <div class="container urgence-content">
+            <h2 class="urgence-title animated-title">URGENCE 24H/24 ?</h2>
+            <p class="urgence-subtitle animated">Notre équipe intervient immédiatement partout en Île-de-France</p>
+            <div class="urgence-buttons animated-scale">
+                <a href="tel:0782184243" class="btn-main">
+                    📞 APPEL URGENT <span class="arrow">&gt;</span>
+                </a>
+                 <a href="index.html#contact" class="btn-secondary">
+                    RDV EN LIGNE <span class="arrow">&gt;</span><span class="arrow">&gt;</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer animated-fade">
+        <div class="container footer-content">
+            <div class="footer-left animated-left" style="display: flex; align-items: flex-start; gap: 0; flex: 1;">
+                <img src="assets/logo-bg-black.png" alt="Dépanneurs Privés" class="footer-logo-img" style="margin-bottom:0;">
+            </div>
+            <div class="footer-right animated-right" style="display: flex; flex-direction: column; align-items: flex-start; gap: 0.5rem;">
+                <div class="footer-contact-row">
+                    <span class="footer-icon"><img src="assets/icones/icon-localisation.png" alt="Localisation" style="width:22px;height:22px;"></span>
+                    <span>4 Avenue Lelièvre, 93600<br>Aulnay-sous-Bois</span>
+                </div>
+                <div class="footer-contact-row">
+                    <span class="footer-icon"><img src="assets/icones/icon-tel.png" alt="Téléphone" style="width:22px;height:22px;"></span>
+                    <span>01 80 27 20 27</span>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bar animated-fade">
+            <div class="footer-bar-left">2025 COPYRIGHT DÉPANNEURS PRIVÉS</div>
+            <div class="footer-bar-links">
+                <a href="#">MENTIONS LÉGALES</a>
+                <a href="#">GESTION DES COOKIES</a>
+                <a href="#">POLITIQUE DE CONFIDENTIALITÉ</a>
+                <a href="#">CONDITIONS GÉNÉRALES D'UTILISATION</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal RDV en ligne -->
+    <div class="modal-rdv-bg" id="modalRdvBg">
+      <div class="modal-rdv">
+        <button class="modal-close" id="modalRdvClose" aria-label="Fermer">&times;</button>
+        <form class="modal-form" autocomplete="off">
+          <div class="modal-form-row">
+            <label for="rdv-nom">Nom</label>
+            <input type="text" id="rdv-nom" name="nom" placeholder="Nom" required>
+          </div>
+          <div class="modal-form-row">
+            <label for="rdv-email">Email</label>
+            <input type="email" id="rdv-email" name="email" placeholder="Votre adresse email" required>
+          </div>
+          <div class="modal-form-row">
+            <label for="rdv-tel">Téléphone</label>
+            <input type="tel" id="rdv-tel" name="tel" placeholder="0122336448" required pattern="[0-9 ]+">
+          </div>
+          <div class="modal-form-row">
+            <label for="rdv-objet">Sélectionnez un objet</label>
+            <select id="rdv-objet" name="objet" required>
+              <option value="">Choisir un service</option>
+              <option value="debouchage">Débouchage d'urgence</option>
+              <option value="pompage">Pompage de fosse</option>
+              <option value="curage">Curage de canalisation</option>
+              <option value="inspection">Inspection caméra</option>
+              <option value="travaux">Travaux d'assainissement</option>
+              <option value="autre">Autre demande</option>
+            </select>
+          </div>
+          <div class="modal-form-row full">
+            <label for="rdv-message">Message</label>
+            <textarea id="rdv-message" name="message" placeholder="Décrivez votre problème ou votre demande..." required></textarea>
+          </div>
+          <div class="modal-form-row full">
+            <button type="submit" class="modal-btn">ENVOYER LA DEMANDE &gt;</button>
+          </div>
+        </form>
+      </div>
+    </div>
+</body>
+</html>
