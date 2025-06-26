@@ -526,17 +526,38 @@ section {
 @media (max-width: 900px) {
     .services-grid {
         grid-template-columns: 1fr;
-        gap: 2rem;
+        gap: 1.5rem;
         padding: 0.5rem 0 1.5rem 0;
+        max-width: 100%;
     }
     .service-card {
         min-width: 0;
         max-width: 100%;
+        width: 100%;
         height: auto;
-        min-height: 180px;
-        padding: 1.5rem 1rem;
-        gap: 16px;
-        margin-bottom: 1rem;
+        min-height: 150px;
+        padding: 1.2rem 1rem;
+        gap: 12px;
+        margin-bottom: 0.5rem;
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+    }
+    .service-card:hover {
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 8px 20px 0 rgba(253,74,54,0.1), 0 2px 6px 0 rgba(0,0,0,0.06);
+    }
+    .service-icon {
+        margin-bottom: 0.5rem;
+    }
+    .service-content h3 {
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+    }
+    .service-content p {
+        font-size: 0.9rem;
+        line-height: 1.4;
     }
 }
 /* About */
@@ -670,30 +691,62 @@ section {
     margin-left: 0;
 }
 @media (max-width: 900px) {
+    .about {
+        padding: 2rem 0 1rem 0;
+    }
+    .about-overlap {
+        margin-top: -60px;
+        padding-top: 60px;
+    }
     .about .container.about-content {
-        width: 100vw;
-        max-width: 100vw;
-        left: 50%;
-        transform: translateX(-50%);
-        padding-left: 0;
-        padding-right: 0;
+        width: 100%;
+        max-width: 100%;
+        left: 0;
+        transform: none;
+        padding-left: 1rem;
+        padding-right: 1rem;
     }
     .about-content {
         flex-direction: column;
         min-height: unset;
-        gap: 2rem;
-        padding: 1.5rem 0 0 0;
+        gap: 1.5rem;
+        padding: 1rem 0;
+        align-items: center;
+        text-align: center;
     }
     .about-img {
-        min-height: 220px;
-        height: 220px;
+        flex: none;
+        width: 100%;
+        min-height: 200px;
+        height: 200px;
+        margin: 0;
     }
     .about-img img {
         height: 100%;
-        border-radius: 10px;
+        width: 100%;
+        object-fit: cover;
+        border-radius: 12px;
     }
     .about-text {
-        padding: 1.5rem 0.5rem 1.5rem 0.5rem;
+        flex: none;
+        width: 100%;
+        padding: 0;
+        text-align: center;
+    }
+    .about-text h2 {
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+    }
+    .about-text p {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+    }
+    .about-btn {
+        margin: 0 auto 1rem auto;
+    }
+    .about-logos {
+        justify-content: center;
     }
 }
 /* Zones */
@@ -772,22 +825,45 @@ section {
     margin: 0 auto;
 }
 @media (max-width: 900px) {
+    .zones {
+        padding: 2rem 0;
+    }
     .zones-content {
         flex-direction: column;
-        gap: 2rem;
+        gap: 1.5rem;
+        padding: 0 1rem;
+    }
+    .zones-text {
+        order: 1;
+        text-align: center;
+        width: 100%;
+    }
+    .zones-title {
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+        text-align: center;
+    }
+    .zones-desc {
+        justify-content: center;
+        text-align: center;
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+    .zones-text-desc {
+        font-size: 0.95rem;
+        line-height: 1.5;
     }
     .zones-map {
-        flex: 1 1 100%;
-    }
-    .zones-map-img {
+        order: 2;
+        flex: none;
         width: 100%;
-        max-width: 340px;
-        height: auto;
     }
+    .zones-map-img,
     .zones-map-iframe {
         width: 100%;
-        max-width: 340px;
-        height: 340px;
+        max-width: 100%;
+        height: 250px;
+        border-radius: 16px;
     }
 }
 /* Contact */
@@ -931,31 +1007,54 @@ section {
     transition: color 0.5s;
 }
 @media (max-width: 1000px) {
+    .why {
+        padding: 2rem 0;
+    }
+    .why-title {
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+    }
     .why-grid {
         flex-direction: column;
         align-items: center;
-        gap: 1.5rem;
+        gap: 1.2rem;
         text-align: center;
+        padding: 0 1rem;
     }
     
     .why-card {
-        max-width: 400px;
+        max-width: 100%;
         width: 100%;
         text-align: center;
         min-width: 0;
+        padding: 1.5rem;
+    }
+    .why-card h3 {
+        font-size: 1.1rem;
+        margin-bottom: 0.8rem;
+    }
+    .why-card p {
+        font-size: 0.95rem;
+        line-height: 1.5;
     }
 }
 @media (max-width: 900px) {
     .why-grid {
-        flex-direction: column;
-        gap: 1.5rem;
-        align-items: center;
+        gap: 1rem;
+        padding: 0 0.8rem;
     }
     .why-card {
         min-width: 0;
         width: 100%;
-        max-width: 400px;
+        max-width: 100%;
         align-items: center;
+        padding: 1.3rem;
+    }
+    .why-card h3 {
+        font-size: 1rem;
+    }
+    .why-card p {
+        font-size: 0.9rem;
     }
 }
 /* Footer */
@@ -1521,54 +1620,85 @@ section {
     line-height: 1.4;
 }
 @media (max-width: 900px) {
+    .contact-steps {
+        padding: 2rem 0;
+    }
+    .contact-steps-content {
+        padding: 0 1rem;
+    }
+    .contact-steps-title {
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+    }
     .contact-steps-grid {
         flex-direction: column;
-        gap: 1.5rem;
-        align-items: left;
-        padding: 0 1rem; /* Marges latérales sur tablettes */
+        gap: 1.2rem;
+        align-items: center;
+        padding: 0;
     }
     .contact-step-card {
         min-width: 0;
         width: 100%;
-        max-width: 400px;
-        margin: 0 auto;
+        max-width: 100%;
+        margin: 0;
+        padding: 1.5rem;
+        gap: 1rem;
+    }
+    .contact-step-icon-bg {
+        width: 65px;
+        height: 65px;
+    }
+    .contact-step-icon {
+        width: 40px;
+        height: 40px;
+    }
+    .contact-step-title {
+        font-size: 1.1rem;
+    }
+    .contact-step-desc {
+        font-size: 0.95rem;
+        line-height: 1.5;
     }
 }
 
 /* Media query pour les mobiles */
 @media (max-width: 768px) {
     .contact-steps-content {
-        padding: 0 1.5rem;
-    }
-    .contact-steps-grid {
-        padding: 0 0.5rem;
+        padding: 0 1rem;
     }
     .contact-step-card {
-        max-width: 100%;
-        margin: 0;
-        padding: 1.8rem 1.5rem;
+        padding: 1.3rem;
+    }
+    .contact-step-title {
+        font-size: 1rem;
+    }
+    .contact-step-desc {
+        font-size: 0.9rem;
     }
 }
 
 /* Media query pour les très petits écrans */
 @media (max-width: 480px) {
     .contact-steps-content {
-        padding: 0 1rem;
-    }
-    .contact-steps-grid {
-        padding: 0;
+        padding: 0 0.8rem;
     }
     .contact-step-card {
-        padding: 1.5rem 1rem;
-        gap: 1rem;
+        padding: 1.2rem;
+        gap: 0.8rem;
     }
     .contact-step-icon-bg {
-        width: 60px;
-        height: 60px;
+        width: 55px;
+        height: 55px;
     }
     .contact-step-icon {
-        width: 40px;
-        height: 40px;
+        width: 35px;
+        height: 35px;
+    }
+    .contact-step-title {
+        font-size: 0.95rem;
+    }
+    .contact-step-desc {
+        font-size: 0.85rem;
     }
 }
 
@@ -2422,41 +2552,14 @@ section {
         height: fit-content;
     }
     
-    /* Cacher le bouton WhatsApp sur mobile */
-    .btn-whatsapp {
-        display: none;
-    }
-    
-    /* Afficher le bouton urgence à droite sur mobile */
-    .btn-urgence {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: var(--premium);
-        color: white;
-        padding: 0.6rem 1rem;
-        border-radius: 20px;
-        font-size: 0.8rem;
-        font-weight: bold;
-        text-decoration: none;
-        border: none;
-        transition: all 0.3s ease;
-    }
-    
-    .btn-urgence:hover {
-        background: #b73524;
-        transform: scale(1.05);
-    }
-    
-    /* Actions à droite - alignement parfait */
+    /* Cacher complètement les boutons WhatsApp et Urgence sur mobile */
     .nav-actions {
-        position: absolute;
-        right: 12px;
-        top: 0;
-        bottom: 0;
-        margin: auto 0;
-        height: fit-content;
-        gap: 0;
+        display: none !important;
+    }
+    
+    .btn-whatsapp,
+    .btn-urgence {
+        display: none !important;
     }
     
     .btn-whatsapp {
