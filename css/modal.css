@@ -1,0 +1,202 @@
+/**
+ * Styles pour les modals - Dépanneurs Privés
+ * Styles CSS pour les modals de contact/RDV
+ */
+
+/* === Modal RDV en ligne === */
+.modal-rdv-bg {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(22,25,34,0.45);
+    backdrop-filter: blur(4px);
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s;
+}
+
+.modal-rdv-bg.active { 
+    display: flex; 
+}
+
+.modal-rdv {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 8px 40px #0002;
+    padding: 2.5rem 2.5rem 2rem 2.5rem;
+    max-width: 600px;
+    width: 95vw;
+    position: relative;
+    animation: modalIn 0.35s cubic-bezier(.4,0,.2,1);
+}
+
+@keyframes modalIn {
+    0% { 
+        opacity: 0; 
+        transform: scale(0.95) translateY(40px); 
+    }
+    100% { 
+        opacity: 1; 
+        transform: scale(1) translateY(0); 
+    }
+}
+
+.modal-close {
+    position: absolute;
+    top: 18px; right: 18px;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: #aaa;
+    cursor: pointer;
+    transition: color 0.2s;
+    z-index: 2;
+}
+
+.modal-close:hover { 
+    color: #FD4A36; 
+}
+
+.modal-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.2rem 2rem;
+}
+
+.modal-form-row {
+    flex: 1 1 45%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0.5rem;
+}
+
+.modal-form-row.full {
+    flex: 1 1 100%;
+}
+
+.modal-form label {
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 1.08rem;
+    color: #222;
+    margin-bottom: 0.3rem;
+    font-weight: 600;
+}
+
+.modal-form input, 
+.modal-form select, 
+.modal-form textarea {
+    background: #f3f3f3;
+    border: none;
+    border-radius: 10px;
+    padding: 0.9rem 1.1rem;
+    font-size: 1.08rem;
+    font-family: 'Montserrat', Arial, sans-serif;
+    margin-bottom: 0.2rem;
+    color: #222;
+    outline: none;
+    transition: box-shadow 0.2s, border 0.2s;
+    box-shadow: 0 1px 4px #0001;
+    resize: none;
+}
+
+.modal-form input:focus, 
+.modal-form select:focus, 
+.modal-form textarea:focus {
+    box-shadow: 0 2px 8px #fd4a3620;
+    border: 1.5px solid #FD4A36;
+}
+
+.modal-form textarea {
+    min-height: 90px;
+    max-height: 200px;
+}
+
+.modal-form .modal-btn {
+    background: #D3462F;
+    color: #FFF;
+    border: none;
+    border-radius: 10px;
+    padding: 1.1rem 0;
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    width: 100%;
+    margin-top: 1.2rem;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    box-shadow: 0 2px 8px #fd4a3620;
+}
+
+.modal-form .modal-btn:hover {
+    background: #FD4A36;
+    color: #fff;
+}
+
+.modal-form .modal-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* === Notifications === */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 20px;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    z-index: 10000;
+    max-width: 300px;
+    word-wrap: break-word;
+    font-family: 'Montserrat', Arial, sans-serif;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.notification-success {
+    background: #44aa44;
+}
+
+.notification-error {
+    background: #ff4444;
+}
+
+.notification-info {
+    background: #4488cc;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.notification {
+    animation: slideInRight 0.3s ease;
+}
+
+/* === Responsive === */
+@media (max-width: 600px) {
+    .modal-rdv { 
+        padding: 1.2rem 0.5rem 1rem 0.5rem; 
+        margin: 1rem;
+        width: calc(100vw - 2rem);
+    }
+    
+    .modal-form-row { 
+        flex: 1 1 100%; 
+    }
+    
+    .notification {
+        left: 10px;
+        right: 10px;
+        max-width: none;
+    }
+}

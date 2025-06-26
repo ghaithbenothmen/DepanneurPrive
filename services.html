@@ -8,184 +8,8 @@
     <link href="https://fonts.googleapis.com/css?family=Anton:400&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito:700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    <style>
-    /* === Modal RDV en ligne === */
-    .modal-rdv-bg {
-        position: fixed;
-        top: 0; left: 0; right: 0; bottom: 0;
-        width: 100vw; height: 100vh;
-        background: rgba(22,25,34,0.45);
-        backdrop-filter: blur(4px);
-        z-index: 9999;
-        display: none;
-        align-items: center;
-        justify-content: center;
-        transition: opacity 0.3s;
-    }
-    .modal-rdv-bg.active { display: flex; }
-    .modal-rdv {
-        background: #fff;
-        border-radius: 16px;
-        box-shadow: 0 8px 40px #0002;
-        padding: 2.5rem 2.5rem 2rem 2.5rem;
-        max-width: 600px;
-        width: 95vw;
-        position: relative;
-        animation: modalIn 0.35s cubic-bezier(.4,0,.2,1);
-    }
-    @keyframes modalIn {
-        0% { opacity: 0; transform: scale(0.95) translateY(40px); }
-        100% { opacity: 1; transform: scale(1) translateY(0); }
-    }
-    .modal-close {
-        position: absolute;
-        top: 18px; right: 18px;
-        background: none;
-        border: none;
-        font-size: 2rem;
-        color: #aaa;
-        cursor: pointer;
-        transition: color 0.2s;
-        z-index: 2;
-    }
-    .modal-close:hover { color: #FD4A36; }
-    .modal-form {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 1.2rem 2rem;
-    }
-    .modal-form-row {
-        flex: 1 1 45%;
-        display: flex;
-        flex-direction: column;
-        margin-bottom: 0.5rem;
-    }
-    .modal-form-row.full {
-        flex: 1 1 100%;
-    }
-    .modal-form label {
-        font-family: 'Montserrat', Arial, sans-serif;
-        font-size: 1.08rem;
-        color: #222;
-        margin-bottom: 0.3rem;
-        font-weight: 600;
-    }
-    .modal-form input, .modal-form select, .modal-form textarea {
-        background: #f3f3f3;
-        border: none;
-        border-radius: 10px;
-        padding: 0.9rem 1.1rem;
-        font-size: 1.08rem;
-        font-family: 'Montserrat', Arial, sans-serif;
-        margin-bottom: 0.2rem;
-        color: #222;
-        outline: none;
-        transition: box-shadow 0.2s, border 0.2s;
-        box-shadow: 0 1px 4px #0001;
-        resize: none;
-    }
-    .modal-form input:focus, .modal-form select:focus, .modal-form textarea:focus {
-        box-shadow: 0 2px 8px #fd4a3620;
-        border: 1.5px solid #FD4A36;
-    }
-    .modal-form textarea {
-        min-height: 90px;
-        max-height: 200px;
-    }
-    .modal-form .modal-btn {
-        background: #FFD600;
-        color: #222;
-        border: none;
-        border-radius: 10px;
-        padding: 1.1rem 0;
-        font-family: 'Montserrat', Arial, sans-serif;
-        font-size: 1.15rem;
-        font-weight: 700;
-        width: 100%;
-        margin-top: 1.2rem;
-        cursor: pointer;
-        transition: background 0.2s, color 0.2s;
-        box-shadow: 0 2px 8px #fd4a3620;
-    }
-    .modal-form .modal-btn:hover {
-        background: #FD4A36;
-        color: #fff;
-    }
-    @media (max-width: 600px) {
-        .modal-rdv { padding: 1.2rem 0.5rem 1rem 0.5rem; }
-        .modal-form-row { flex: 1 1 100%; }
-    }
-    </style>    <script>
-    // Animation au scroll (Intersection Observer)
-    document.addEventListener('DOMContentLoaded', function() {
-        const animatedEls = document.querySelectorAll('.animated, .animated-title, .animated-left, .animated-right, .animated-scale, .animated-fade, .service-detailed-card, .animated-services');
-        const observer = new window.IntersectionObserver((entries) => {
-            entries.forEach((entry, index) => {
-                if (entry.isIntersecting) {
-                    // Ajouter un délai progressif pour les cartes de services
-                    if (entry.target.classList.contains('service-detailed-card')) {
-                        setTimeout(() => {
-                            entry.target.classList.add('visible');
-                        }, index * 200);
-                    } else {
-                        entry.target.classList.add('visible');
-                    }
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.15 });
-        animatedEls.forEach(el => observer.observe(el));        // Modal RDV en ligne
-        const btnRdv = document.querySelector('.btn-secondary');
-        const btnContact = document.querySelector('.nav-links a[href="index.html#contact"]');
-        const modalBg = document.getElementById('modalRdvBg');
-        const modalClose = document.getElementById('modalRdvClose');
-        function openModalRdv(e) {
-            if(e) e.preventDefault();
-            modalBg.classList.add('active');
-        }
-        if(btnRdv && modalBg && modalClose) {
-            btnRdv.addEventListener('click', openModalRdv);
-            modalClose.addEventListener('click', function() {
-                modalBg.classList.remove('active');
-            });
-            modalBg.addEventListener('click', function(e) {
-                if(e.target === modalBg) modalBg.classList.remove('active');
-            });
-            document.addEventListener('keydown', function(e) {
-                if(e.key === 'Escape') modalBg.classList.remove('active');
-            });
-        }        if(btnContact && modalBg) {
-            btnContact.addEventListener('click', openModalRdv);
-        }        // Menu mobile toggle
-        const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
-        const navLinks = document.querySelector('.nav-links');
-        if(mobileMenuToggle && navLinks) {
-            mobileMenuToggle.addEventListener('click', function(e) {
-                e.stopPropagation();
-                mobileMenuToggle.classList.toggle('active');
-                navLinks.classList.toggle('active');
-            });
-            
-            // Fermer le menu mobile lors du clic sur un lien
-            const navLinksItems = document.querySelectorAll('.nav-links a');
-            navLinksItems.forEach(link => {
-                link.addEventListener('click', function() {
-                    mobileMenuToggle.classList.remove('active');
-                    navLinks.classList.remove('active');
-                });
-            });
-            
-            // Fermer le menu mobile au clic en dehors
-            document.addEventListener('click', function(e) {
-                if (!mobileMenuToggle.contains(e.target) && !navLinks.contains(e.target)) {
-                    mobileMenuToggle.classList.remove('active');
-                    navLinks.classList.remove('active');
-                }
-            });
-        }
-    });
-    </script>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/modal.css">
 </head>
 <body>
     <!-- Navbar -->
@@ -197,7 +21,7 @@
                 <li><a href="index.html">Accueil</a></li>
                 <li><a href="services.html" class="active">Nos Services</a></li>
                 <li><a href="zones.html">Zones d'intervention</a></li>
-                <li><a href="index.html#contact">Contact</a></li>
+                <li><a href="#contact">Contact</a></li>
             </ul>
             <div class="nav-actions animated-right">
                 <button class="mobile-menu-toggle" aria-label="Menu mobile">
@@ -206,7 +30,7 @@
                     <span></span>
                 </button>
                 <a href="https://wa.me/33782184243" class="btn-whatsapp" aria-label="WhatsApp" target="_blank"><img src="assets/icons-whatsapp.png" alt="WhatsApp" style="height:24px;width:24px;"></a>
-                <a href="tel:0782184243" class="btn-urgence">URGENCE 24/7 <span class="arrow">&gt;</span></a>
+                <a href="https://wa.me/33782184243" class="btn-urgence">URGENCE 24/7 <span class="arrow">&gt;</span></a>
             </div>
         </div>
     </nav>    <!-- Services Hero Section -->
@@ -224,7 +48,7 @@
     <!-- Services Main Section -->
     <section class="services-main-section animated">
         <div class="container">
-            <h2 class="services-main-title animated-title">🛠️ Nos Prestations Détaillées</h2>
+            <h2 class="services-main-title animated-title">Nos Prestations Détaillées</h2>
             <div class="services-grid-detailed">                  <div class="service-detailed-card featured animated-scale" style="transition-delay:0.1s;">
                     <div class="service-img-wrapper">
                         <img src="assets/entretien.jpeg" alt="Pose et entretien de canalisations" class="service-img">
@@ -328,9 +152,9 @@
             <h2 class="urgence-title animated-title">URGENCE 24H/24 ?</h2>
             <p class="urgence-subtitle animated">Notre équipe intervient immédiatement partout en Île-de-France</p>
             <div class="urgence-buttons animated-scale">
-                <a href="tel:0782184243" class="btn-main">
+                <a href="https://wa.me/33782184243" class="btn-main">
                     APPEL URGENT <span class="arrow">&gt;</span>
-                </a>                <a href="index.html#contact" class="btn-secondary">
+                </a>                <a href="#contact" class="btn-secondary">
                     RDV EN LIGNE <span class="arrow">&gt;</span><span class="arrow">&gt;</span>
                 </a>
             </div>
@@ -382,14 +206,15 @@
             <input type="tel" id="rdv-tel" name="tel" placeholder="0122336448" required pattern="[0-9 ]+">
           </div>
           <div class="modal-form-row">
-            <label for="rdv-objet">Sélectionnez un objet</label>
+            <label for="rdv-objet">Sélectionnez un service</label>
             <select id="rdv-objet" name="objet" required>
-              <option value="">Choisir un service</option>
-              <option value="debouchage">Débouchage d'urgence</option>
-              <option value="pompage">Pompage de fosse</option>
-              <option value="curage">Curage de canalisation</option>
-              <option value="inspection">Inspection caméra</option>
-              <option value="travaux">Travaux d'assainissement</option>
+              <option value="">-- Sélectionnez un service --</option>
+              <option value="pose-entretien-canalisations">Pose et entretien de canalisations</option>
+              <option value="stations-relevage">Stations de relevage</option>
+              <option value="inspection-reseaux">Inspection des réseaux</option>
+              <option value="debouchage-detartrage">Débouchage et détartrage</option>
+              <option value="pompage">Pompage</option>
+              <option value="curage-nettoyage">Curage & Nettoyage</option>
               <option value="autre">Autre demande</option>
             </select>
           </div>
@@ -403,5 +228,12 @@
         </form>
       </div>
     </div>
+
+    <!-- Scripts pour l'envoi d'emails -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script src="js/config_email.js"></script>
+    <script src="js/email_services.js"></script>
+    <script src="js/contact_form.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>

@@ -4,8 +4,8 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:500&display=swap');
 
 :root {
-    --premium: #FD4A36;
-    --nav-black: #161922;
+    --premium: #D3462F;
+    --nav-black: #00234b;
     --white: #fff;
     --gray-bg: #f7f7f7;
     --text: #222;
@@ -130,7 +130,7 @@ body {
     font-weight: bold;
 }
 .btn-urgence:hover {
-    background: #c93a28;
+    background: #D3462F;
 }
 
 /* Hero */
@@ -146,7 +146,7 @@ body {
     top: 0; left: 0; right: 0; bottom: 0;
     width: 100vw;
     height: 80%;
-    background: url('assets/bg-shape.png') center top/cover no-repeat;
+    background: url('../assets/bg-shape.png') center top/cover no-repeat;
     z-index: 0;
     pointer-events: none;
 }
@@ -166,7 +166,7 @@ body {
 .hero-subtitle {
     font-family: 'Montserrat', Arial, sans-serif;
     font-size: 2rem;
-    color: #161922;
+    color: #00234b;
     margin-bottom: 2.5rem;
     font-weight: 500;
     margin-bottom: 48px;
@@ -200,7 +200,7 @@ body {
     font-weight: bold;
 }
 .btn-main:hover {
-    background: #c93a28;
+    background: #D3462F;
 }
 .btn-secondary {
     background: var(--nav-black);
@@ -213,7 +213,7 @@ body {
     font-size: 1.1rem;
     text-decoration: none;
     letter-spacing: 0.5px;
-    box-shadow: 0 2px 8px #16192220;
+    box-shadow: 0 2px 8px #00234b20;
     transition: background 0.2s, color 0.2s;
     display: flex;
     align-items: center;
@@ -397,9 +397,10 @@ body {
         min-width: 0;
         max-width: 100%;
         height: auto;
-        min-height: 150px;
-        padding: 1.2rem 0.7rem;
+        min-height: 180px;
+        padding: 1.5rem 1rem;
         gap: 16px;
+        margin-bottom: 1rem;
     }
 }
 /* About */
@@ -884,7 +885,7 @@ body {
 }
 .footer-bar {
     background: #FD4A36;
-    color: #161922;
+    color: #00234b;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -898,14 +899,14 @@ body {
     font-size: 10px;
     font-weight: 600;
     letter-spacing: 1px;
-    color: #161922;
+    color: #00234b;
 }
 .footer-bar-links {
     display: flex;
     gap: 1.5rem;
 }
 .footer-bar-links a {
-    color: #161922;
+    color: #00234b;
     text-decoration: none;
     font-size: 10px;
     font-weight: 500;
@@ -1149,7 +1150,8 @@ body {
     .nav-content {
         flex-direction: column;
         gap: 1rem;
-    }    .services-grid, .why-grid, .contact-cards {
+    }
+    .services-grid, .why-grid, .contact-cards {
         flex-direction: column;
         display: flex;
         align-items: center;
@@ -1198,7 +1200,7 @@ body {
     top: 0; left: 0; right: 0; bottom: 0;
     width: 100%;
     height: 100%;
-    background: url('assets/background.jpeg') center top/cover no-repeat;
+    background: url('../assets/background.jpeg') center top/cover no-repeat;
     z-index: 1;
 }
 .contact-steps::before {
@@ -1207,7 +1209,7 @@ body {
     top: 0; left: 0; right: 0; bottom: 0;
     width: 100%;
     height: 100%;
-    background: #161922b3; /* overlay noir plus transparent */
+    background: #00234bb3; /* overlay noir plus transparent */
     z-index: 2;
 }
 .contact-steps-content {
@@ -1251,7 +1253,7 @@ body {
     margin: 0 auto;
 }
 .contact-step-icon-bg {
-    background-image: url('assets/icones/shape-icone-bg.png');
+    background-image: url('../assets/icones/shape-icone-bg.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -1310,7 +1312,7 @@ body {
     padding: 5rem 0 6rem 0;
     text-align: left;
     overflow: hidden;
-    background: linear-gradient(135deg, rgba(22,25,34,0.85) 0%, rgba(253,74,54,0.9) 400%), url('assets/bg-service.jpg') center/cover no-repeat;
+    background: url('../assets/bg-service.jpg') center/cover no-repeat;
     min-height: 400px;
     display: flex;
     align-items: center;
@@ -1320,7 +1322,7 @@ body {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: url('assets/bg-shape.png') center/cover no-repeat;
+    background: url('../assets/bg-shape.png') center/cover no-repeat;
     opacity: 0.05;
     z-index: 0;
     pointer-events: none;
@@ -1333,7 +1335,7 @@ body {
 }
 .services-hero-title {
     font-family: 'Anton', Arial, sans-serif;
-    font-size: 4rem;
+    font-size: 7rem;
     color: #fff;
     margin-bottom: 1.5rem;
     font-weight: 700;
@@ -1585,14 +1587,14 @@ body {
     box-shadow: 0 2px 8px rgba(253,74,54,0.2);
 }
 .service-cta-btn:hover {
-    background: #c93a28;
+    background: #D3462F;
     transform: translateY(-3px);
     box-shadow: 0 6px 18px rgba(253,74,54,0.4);
 }
 
 /* Urgence Section */
 .urgence-section {
-    background: linear-gradient(135deg, #161922 0%, #FD4A36 100%);
+    background: linear-gradient(135deg, #00234b 0%, #FD4A36 100%);
     color: #fff;
     padding: 5rem 0;
     text-align: center;
@@ -1603,7 +1605,7 @@ body {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: url('assets/shape.png') center/cover no-repeat;
+    background: url('../assets/shape.png') center/cover no-repeat;
     opacity: 0.1;
     z-index: 0;
 }
@@ -1718,7 +1720,7 @@ body {
     padding: 5rem 0 6rem 0;
     text-align: left;
     overflow: hidden;
-    background: linear-gradient(135deg, rgba(22,25,34,0.85) 0%, rgba(253,74,54,0.9) 400%), url('assets/bg-service.jpg') center/cover no-repeat;
+    background: url('../assets/bg-service.jpg') center/cover no-repeat;
     min-height: 400px;
     display: flex;
     align-items: center;
@@ -1728,7 +1730,7 @@ body {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: url('assets/bg-shape.png') center/cover no-repeat;
+    background: url('../assets/bg-shape.png') center/cover no-repeat;
     opacity: 0.05;
     z-index: 0;
     pointer-events: none;
@@ -1741,7 +1743,7 @@ body {
 }
 .zones-hero-title {
     font-family: 'Anton', Arial, sans-serif;
-    font-size: 4rem;
+    font-size: 5rem;
     color: #fff;
     margin-bottom: 1.5rem;
     font-weight: 700;
@@ -2183,8 +2185,11 @@ body {
     .video-overlap-wrapper {
         width: 90%;
         max-width: 400px;
+    }    
+    /* Services responsive */
+    .services {
+        padding: 3rem 0 5rem 0;
     }
-      /* Services responsive */
     .services-title {
         font-size: 2.5rem;
         line-height: 1.2;
@@ -2203,6 +2208,9 @@ body {
         max-width: 100%;
         width: 100%;
         margin: 0 auto;
+        height: auto;
+        min-height: auto;
+        padding: 1.8rem;
     }
     
     /* Contact steps responsive */
@@ -2319,7 +2327,7 @@ body {
     
     /* Services mobile */
     .services {
-        padding: 3rem 0;
+        padding: 3rem 0 6rem 0;
     }
     .services-title {
         font-size: 2rem;
@@ -2335,10 +2343,35 @@ body {
     .service-card {
         padding: 1.5rem;
         min-height: auto;
+        height: auto;
         width: 100%;
         max-width: 100%;
-        margin: 0 auto;
+        margin: 0 auto 1.5rem auto;
         box-sizing: border-box;
+        flex-direction: row;
+        text-align: left;
+        gap: 1rem;
+        align-items: center;
+    }
+    .service-card .service-icon {
+        width: 50px;
+        height: 50px;
+        flex-shrink: 0;
+    }
+    .service-card .service-icon img {
+        width: 40px;
+        height: 40px;
+    }
+    .service-content {
+        flex: 1;
+    }
+    .service-content h3 {
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+    }
+    .service-content p {
+        font-size: 0.95rem;
+        line-height: 1.4;
     }
     .service-icon img {
         width: 40px;
@@ -2347,9 +2380,14 @@ body {
     .service-content h3 {
         font-size: 1.1rem;
         margin-bottom: 0.8rem;
+        text-align: center;
+        line-height: 1.3;
     }
     .service-content p {
         font-size: 0.95rem;
+        line-height: 1.4;
+        text-align: center;
+        margin: 0;
     }
     
     /* About mobile */
@@ -2385,7 +2423,8 @@ body {
     /* Zones section mobile */
     .zones {
         padding: 3rem 0;
-    }    .zones-content {
+    }
+    .zones-content {
         flex-direction: column;
         gap: 2rem;
         text-align: center;
