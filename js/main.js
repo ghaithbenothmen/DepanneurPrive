@@ -156,37 +156,87 @@ class DepanneurPriveApp {
     }
 
     /**
-     * Initialise le menu mobile
+     * Initialise le menu mobile avec gestion du scroll
      */
     initMobileMenu() {
         const mobileToggle = document.querySelector(SITE_CONFIG.selectors.mobileToggle);
         const navLinks = document.querySelector(SITE_CONFIG.selectors.navLinks);
+        const body = document.body;
 
         if (!mobileToggle || !navLinks) return;
 
         // Toggle du menu
         mobileToggle.addEventListener('click', (e) => {
             e.stopPropagation();
-            mobileToggle.classList.toggle('active');
-            navLinks.classList.toggle('active');
+            const isActive = mobileToggle.classList.contains('active');
+            
+            if (isActive) {
+                // Fermer le menu
+                this.closeMobileMenu(mobileToggle, navLinks, body);
+            } else {
+                // Ouvrir le menu
+                this.openMobileMenu(mobileToggle, navLinks, body);
+            }
         });
 
         // Fermer le menu sur clic des liens
         const navLinksItems = navLinks.querySelectorAll('a');
         navLinksItems.forEach(link => {
             link.addEventListener('click', () => {
-                mobileToggle.classList.remove('active');
-                navLinks.classList.remove('active');
+                this.closeMobileMenu(mobileToggle, navLinks, body);
             });
         });
 
         // Fermer le menu sur clic extérieur
         document.addEventListener('click', (e) => {
             if (!mobileToggle.contains(e.target) && !navLinks.contains(e.target)) {
-                mobileToggle.classList.remove('active');
-                navLinks.classList.remove('active');
+                this.closeMobileMenu(mobileToggle, navLinks, body);
             }
         });
+
+        // Fermer le menu sur escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && navLinks.classList.contains('active')) {
+                this.closeMobileMenu(mobileToggle, navLinks, body);
+            }
+        });
+
+        // Fermer le menu sur redimensionnement
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 900 && navLinks.classList.contains('active')) {
+                this.closeMobileMenu(mobileToggle, navLinks, body);
+            }
+        });
+    }
+
+    /**
+     * Ouvre le menu mobile et bloque le scroll
+     */
+    openMobileMenu(toggle, navLinks, body) {
+        toggle.classList.add('active');
+        navLinks.classList.add('active');
+        body.classList.add('menu-open');
+        
+        // Bloquer le scroll sur mobile
+        if (window.innerWidth <= 900) {
+            body.style.overflow = 'hidden';
+            body.style.position = 'fixed';
+            body.style.width = '100%';
+        }
+    }
+
+    /**
+     * Ferme le menu mobile et restaure le scroll
+     */
+    closeMobileMenu(toggle, navLinks, body) {
+        toggle.classList.remove('active');
+        navLinks.classList.remove('active');
+        body.classList.remove('menu-open');
+        
+        // Restaurer le scroll
+        body.style.overflow = '';
+        body.style.position = '';
+        body.style.width = '';
     }
 
     /**
