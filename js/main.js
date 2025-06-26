@@ -56,6 +56,7 @@ class DepanneurPriveApp {
         this.initModal();
         this.initMobileMenu();
         this.initContactForm();
+        this.initHeroVideo();
         
         console.log('✅ Application initialisée avec succès');
     }
@@ -248,6 +249,66 @@ class DepanneurPriveApp {
         if (typeof initContactForm === 'function') {
             initContactForm();
         }
+    }
+
+    /**
+     * Initialise la fonctionnalité vidéo hero
+     */
+    initHeroVideo() {
+        const heroVideo = document.getElementById('heroVideo');
+        const videoThumbnail = document.getElementById('videoThumbnail');
+        const playButton = document.getElementById('playButton');
+
+        if (!heroVideo || !videoThumbnail || !playButton) return;
+
+        const playVideo = () => {
+            // Copier les dimensions de l'image vers la vidéo
+            const imgRect = videoThumbnail.getBoundingClientRect();
+            heroVideo.style.width = videoThumbnail.offsetWidth + 'px';
+            heroVideo.style.height = videoThumbnail.offsetHeight + 'px';
+            
+            // Masquer l'image et le bouton play
+            videoThumbnail.style.display = 'none';
+            playButton.style.display = 'none';
+            
+            // Afficher et lancer la vidéo
+            heroVideo.style.display = 'block';
+            heroVideo.play().catch(err => {
+                console.error('Erreur lors de la lecture de la vidéo:', err);
+                // En cas d'erreur, remettre l'image
+                videoThumbnail.style.display = 'block';
+                playButton.style.display = 'block';
+                heroVideo.style.display = 'none';
+            });
+        };
+
+        // Event listeners pour lancer la vidéo
+        videoThumbnail.addEventListener('click', playVideo);
+        playButton.addEventListener('click', playVideo);
+
+        // Remettre l'image quand la vidéo se termine
+        heroVideo.addEventListener('ended', () => {
+            heroVideo.style.display = 'none';
+            videoThumbnail.style.display = 'block';
+            playButton.style.display = 'block';
+        });
+
+        // Gérer les erreurs de chargement
+        heroVideo.addEventListener('error', (e) => {
+            console.error('Erreur de chargement de la vidéo:', e);
+            // Garder l'image affichée en cas d'erreur
+            videoThumbnail.style.display = 'block';
+            playButton.style.display = 'block';
+            heroVideo.style.display = 'none';
+        });
+
+        // Ajuster les dimensions lors du redimensionnement de la fenêtre
+        window.addEventListener('resize', () => {
+            if (heroVideo.style.display === 'block') {
+                heroVideo.style.width = videoThumbnail.offsetWidth + 'px';
+                heroVideo.style.height = videoThumbnail.offsetHeight + 'px';
+            }
+        });
     }
 
     /**

@@ -359,6 +359,18 @@ section {
     display: block;
     margin: 0 auto;
 }
+
+/* Styles spécifiques pour la vidéo */
+#heroVideo.hero-video-img {
+    width: 700px;
+    max-width: 95vw;
+    height: auto;
+    object-fit: contain;
+    background-color: #000;
+    border-radius: 20px;
+    display: block;
+    margin: 0 auto;
+}
 .hero-video-play {
     position: absolute;
     left: 50%;
@@ -1133,6 +1145,19 @@ section {
     box-shadow: 0 4px 32px #0002;
     display: block;
 }
+
+/* Styles spécifiques pour la vidéo */
+#heroVideo.hero-video-img {
+    width: 100vw;
+    max-width: 100vw;
+    min-width: 100vw;
+    height: auto;
+    object-fit: contain;
+    background-color: #000;
+    border-radius: 20px;
+    box-shadow: 0 4px 32px #0002;
+    display: block;
+}
 .hero-video-play {
     position: absolute;
     left: 50%;
@@ -1176,6 +1201,16 @@ section {
     display: block;
     border-radius: 12px;
 }
+
+/* Styles spécifiques pour la vidéo */
+#heroVideo.hero-video-img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    background-color: #000;
+    display: block;
+    border-radius: 12px;
+}
 .hero-video-play {
     position: absolute;
     top: 50%;
@@ -1203,6 +1238,16 @@ section {
 
 .hero-video-img {
     width: 100%;
+    display: block;
+    border-radius: 12px;
+}
+
+/* Styles spécifiques pour la vidéo */
+#heroVideo.hero-video-img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    background-color: #000;
     display: block;
     border-radius: 12px;
 }
@@ -1239,6 +1284,18 @@ section {
         margin: 0 auto;
         border-radius: 15px;
     }
+    
+    /* Styles spécifiques pour la vidéo */
+    #heroVideo.hero-video-img {
+        width: 100%;
+        max-width: 100vw;
+        height: auto;
+        object-fit: contain;
+        background-color: #000;
+        margin: 0 auto;
+        border-radius: 15px;
+    }
+    
     .hero-video-overlap {
         bottom: -18%;
     }
@@ -2656,6 +2713,16 @@ section {
     .hero-video-img {
         width: 100%;
         max-width: 100%;
+        border-radius: 10px;
+    }
+    
+    /* Styles spécifiques pour la vidéo */
+    #heroVideo.hero-video-img {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        object-fit: contain;
+        background-color: #000;
         border-radius: 10px;
     }
     

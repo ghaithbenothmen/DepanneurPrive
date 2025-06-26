@@ -50,8 +50,12 @@
                 <a href="#contact" class="btn-secondary">RDV EN LIGNE <span class="arrow">&gt;</span><span class="arrow">&gt;</span></a>
             </div>
             <div class="video-overlap-wrapper animated-scale">
-                <img src="assets/video.jpeg" alt="Vidéo intervention" class="hero-video-img">
-                <span class="hero-video-play"><svg width="48" height="48" viewBox="0 0 48 48"><circle cx="24" cy="24" r="24" fill="#fff"/><polygon points="20,16 34,24 20,32" fill="#FD4A36"/></svg></span>
+                <video id="heroVideo" class="hero-video-img" poster="assets/video.jpeg" preload="metadata" controls style="display: none;">
+                    <source src="assets/vid.mp4" type="video/mp4">
+                    Votre navigateur ne supporte pas la lecture de vidéos.
+                </video>
+                <img id="videoThumbnail" src="assets/video.jpeg" alt="Vidéo intervention" class="hero-video-img" style="cursor: pointer;">
+                <span id="playButton" class="hero-video-play" style="cursor: pointer;"><svg width="48" height="48" viewBox="0 0 48 48"><circle cx="24" cy="24" r="24" fill="#fff"/><polygon points="20,16 34,24 20,32" fill="#FD4A36"/></svg></span>
             </div>
         </div>
     </header>
