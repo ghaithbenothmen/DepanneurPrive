@@ -29,7 +29,14 @@ body {
     overflow-x: hidden; /* Empêche le scroll horizontal qui cause le scroll vertical parasite */
     width: 100%;
     max-width: 100vw;
-    padding-top: 70px; /* Espace pour la navbar fixe */
+    padding-top: 70px; /* Espace pour la navbar fixe - desktop */
+}
+
+/* Éliminer tout espace blanc en haut de la première section */
+body > header:first-of-type,
+body > section:first-of-type,
+body > .hero {
+    margin-top: 0 !important;
 }
 
 /* Bloquer le scroll quand le menu mobile est ouvert */
@@ -1030,7 +1037,7 @@ section {
 }
 .footer-bar {
     background: #FD4A36;
-    color: #00234b;
+    color: #ffffff;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -1044,14 +1051,14 @@ section {
     font-size: 10px;
     font-weight: 600;
     letter-spacing: 1px;
-    color: #00234b;
+    color: #ffffff;
 }
 .footer-bar-links {
     display: flex;
     gap: 1.5rem;
 }
 .footer-bar-links a {
-    color: #00234b;
+    color: #ffffff;
     text-decoration: none;
     font-size: 10px;
     font-weight: 500;
@@ -1517,7 +1524,7 @@ section {
     .contact-steps-grid {
         flex-direction: column;
         gap: 1.5rem;
-        align-items: center;
+        align-items: left;
         padding: 0 1rem; /* Marges latérales sur tablettes */
     }
     .contact-step-card {
@@ -2231,7 +2238,7 @@ section {
     }
 }
 @media (max-width: 600px) {
-    .zones-hero-title { 
+    .zones-hero-title {
         font-size: 2.5rem !important;
     }
     .zones-hero-subtitle {
@@ -2369,7 +2376,16 @@ section {
 
 /* Tablettes (max-width: 900px) */
 @media (max-width: 900px) {
+    /* Ajuster le padding-top du body pour la navbar mobile */
+    body {
+        padding-top: 70px; /* Hauteur de la navbar sur tablette/mobile */
+    }
+    
     /* Navbar responsive - layout mobile uniquement */
+    .navbar {
+        min-height: 70px; /* Hauteur fixe sur mobile */
+    }
+    
     .nav-content {
         position: relative;
         justify-content: space-between;
@@ -2406,12 +2422,33 @@ section {
         height: fit-content;
     }
     
-    /* Cacher le bouton urgence sur mobile */
-    .btn-urgence {
+    /* Cacher le bouton WhatsApp sur mobile */
+    .btn-whatsapp {
         display: none;
     }
     
-    /* WhatsApp seul à droite - alignement parfait */
+    /* Afficher le bouton urgence à droite sur mobile */
+    .btn-urgence {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--premium);
+        color: white;
+        padding: 0.6rem 1rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: bold;
+        text-decoration: none;
+        border: none;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-urgence:hover {
+        background: #b73524;
+        transform: scale(1.05);
+    }
+    
+    /* Actions à droite - alignement parfait */
     .nav-actions {
         position: absolute;
         right: 12px;
@@ -2501,7 +2538,7 @@ section {
     
     /* Hero responsive */
     .hero {
-        padding: 3rem 0 5rem 0;
+        padding: 1rem 0 5rem 0; /* Réduire le padding-top pour éviter l'espace blanc */
     }
     .hero-title {
         font-size: 3rem;
@@ -2578,8 +2615,18 @@ section {
 
 /* Mobile (max-width: 600px) */
 @media (max-width: 600px) {
+    /* Ajuster le padding-top du body pour les petits écrans */
+    body {
+        padding-top: 65px !important; /* Hauteur légèrement réduite sur petits mobiles */
+    }
+    
+    /* Navbar compacte pour petits écrans */
+    .navbar {
+        min-height: 65px; /* Hauteur réduite sur petits mobiles */
+    }
+    
     /* Corrections pour éviter l'espace blanc */
-    html, body {
+    html {
         width: 100%;
         max-width: 100vw;
         overflow-x: hidden;
@@ -2614,7 +2661,7 @@ section {
     }
     
     .mobile-menu-toggle span {
-        width: 20px;
+        width: 22px;
         height: 2px;
     }
     
@@ -2636,12 +2683,33 @@ section {
         height: fit-content;
     }
     
-    /* Cacher le bouton urgence sur mobile */
-    .btn-urgence {
+    /* Cacher le bouton WhatsApp sur mobile */
+    .btn-whatsapp {
         display: none;
     }
     
-    /* WhatsApp seul à droite - alignement parfait */
+    /* Afficher le bouton urgence à droite sur mobile */
+    .btn-urgence {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--premium);
+        color: white;
+        padding: 0.6rem 1rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: bold;
+        text-decoration: none;
+        border: none;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-urgence:hover {
+        background: #b73524;
+        transform: scale(1.05);
+    }
+    
+    /* Actions à droite - alignement parfait */
     .nav-actions {
         position: absolute;
         right: 10px;
@@ -2736,7 +2804,7 @@ section {
     
     /* Hero mobile */
     .hero {
-        padding: 2rem 0 4rem 0;
+        padding: 0.5rem 0 4rem 0; /* Réduire encore plus le padding-top sur petits écrans */
     }
     .hero-title {
         font-size: 2.2rem;
@@ -3068,8 +3136,18 @@ section {
 }
 /* Très petits écrans (max-width: 400px) */
 @media (max-width: 400px) {
+    /* Ajuster le padding-top du body pour les très petits écrans */
+    body {
+        padding-top: 60px !important; /* Hauteur compacte pour très petits écrans */
+    }
+    
+    /* Navbar ultra-compacte pour très petits écrans */
+    .navbar {
+        min-height: 60px; /* Hauteur très compacte */
+    }
+    
     /* Corrections strictes pour les très petits écrans */
-    html, body {
+    html {
         width: 100%;
         max-width: 100vw;
         overflow-x: hidden;
@@ -3162,6 +3240,11 @@ section {
     * {
         max-width: 100vw;
         box-sizing: border-box;
+    }
+    
+    /* Hero pour très petits écrans */
+    .hero {
+        padding: 0.25rem 0 3rem 0; /* Padding minimal sur très petits écrans */
     }
     
     .hero-title {
