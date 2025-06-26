@@ -3,12 +3,24 @@
  * Gestion du formulaire de contact avec EmailJS et fallback mailto
  */
 
+// Variable pour éviter la double initialisation
+let isContactFormInitialized = false;
+
 // Gestion du formulaire de contact avec EmailJS uniquement
 function initContactForm() {
+    // Éviter la double initialisation
+    if (isContactFormInitialized) {
+        console.log('⚠️ Formulaire de contact déjà initialisé');
+        return;
+    }
+    
     const modalForm = document.querySelector('.modal-form');
     const modalBg = document.getElementById('modalRdvBg');
     
     if (!modalForm) return;
+    
+    console.log('✅ Initialisation du formulaire de contact');
+    isContactFormInitialized = true;
     
     modalForm.addEventListener('submit', async function(e) {
         e.preventDefault();
@@ -153,9 +165,5 @@ const style = document.createElement('style');
 style.textContent = notificationCSS;
 document.head.appendChild(style);
 
-// Initialisation quand le DOM est prêt
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initContactForm);
-} else {
-    initContactForm();
-}
+// L'initialisation se fait depuis main.js pour éviter la duplication
+// Plus besoin d'auto-initialisation ici

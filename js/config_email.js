@@ -7,13 +7,13 @@
 // Configuration EmailJS uniquement
 const EMAIL_CONFIG = {
     // Adresse de destination
-    destination: 'ghaithraid@gmail.com',
+    destination: 'contact@depanneursprives.com',
     
     // Configuration EmailJS (gratuit, 200 emails/mois)
     emailjs: {
-        service_id: 'service_sr6b87l',    // Votre Service ID EmailJS
-        template_id: 'template_t3mzsxw',  // Votre Template ID EmailJS  
-        public_key: '9BO4jX843DpIDmKhz'    // À remplacer par votre Public Key EmailJS
+        service_id: 'service_edak8u4',    // Votre Service ID EmailJS
+        template_id: 'template_n3fj7ru',  // Votre Template ID EmailJS  
+        public_key: 'DlGmCh4wHukcdasQd'    // À remplacer par votre Public Key EmailJS
     },
     
     // Messages d'interface

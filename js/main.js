@@ -244,8 +244,7 @@ class DepanneurPriveApp {
      * Initialise le formulaire de contact
      */
     initContactForm() {
-        // Cette fonction sera appelée depuis contact_form.js
-        // pour éviter la duplication de code
+        // Appeler la fonction depuis contact_form.js une seule fois
         if (typeof initContactForm === 'function') {
             initContactForm();
         }
