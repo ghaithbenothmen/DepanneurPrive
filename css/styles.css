@@ -1814,14 +1814,14 @@ section {
 /* Services Main Section */
 .services-main-section {
     background: var(--white);
-    padding: 5rem 0 6rem 0;
+   
 }
 .services-main-title {
     text-align: center;
     font-family: 'Nunito', Arial, sans-serif;
     font-size: 3rem;
     font-weight: 800;
-    margin: 0 0 4rem 0;
+    margin: 2rem 0 3rem 0;
     color: #222;
     letter-spacing: 1px;
     opacity: 0;
