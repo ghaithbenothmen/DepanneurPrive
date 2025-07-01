@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page non trouvée - Dépanneurs Privés</title>
+    <link rel="icon" type="image/png" href="assets/logo.png">
+    <link href="https://fonts.googleapis.com/css?family=Anton:400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --premium: #D3462F;
+            --nav-black: #00234b;
+            --white: #fff;
+            --text: #222;
+        }
+        
+        body {
+            margin: 0;
+            font-family: 'Montserrat', Arial, sans-serif;
+            background: var(--white);
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .error-container {
+            max-width: 600px;
+        }
+        
+        .error-code {
+            font-family: 'Anton', Arial, sans-serif;
+            font-size: 8rem;
+            color: var(--premium);
+            margin: 0;
+            line-height: 1;
+        }
+        
+        .error-title {
+            font-size: 2rem;
+            color: var(--nav-black);
+            margin: 1rem 0;
+            font-weight: 600;
+        }
+        
+        .error-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin: 2rem 0;
+            color: var(--text);
+        }
+        
+        .back-btn {
+            display: inline-block;
+            background: var(--premium);
+            color: var(--white);
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        
+        .back-btn:hover {
+            background: #c53d2a;
+        }
+        
+        @media (max-width: 768px) {
+            .error-code {
+                font-size: 5rem;
+            }
+            .error-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <h1 class="error-code">404</h1>
+        <h2 class="error-title">Page non trouvée</h2>
+        <p class="error-text">
+            Désolé, la page que vous recherchez n'existe pas ou a été déplacée.<br>
+            Retournez à l'accueil ou contactez-nous pour une intervention d'urgence.
+        </p>
+        <a href="/" class="back-btn">Retour à l'accueil</a>
+    </div>
+</body>
+</html>

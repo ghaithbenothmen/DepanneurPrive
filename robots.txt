@@ -1,0 +1,17 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://depanneursprives.fr/sitemap.xml
+
+# Blocage des fichiers sensibles
+Disallow: /js/config_email.js
+Disallow: /.htaccess
+Disallow: /css/
+Disallow: /js/
+
+# Autoriser les ressources importantes pour le SEO
+Allow: /assets/
+Allow: /css/styles.css
+Allow: /css/modal.css
+Allow: /css/cookies.css
