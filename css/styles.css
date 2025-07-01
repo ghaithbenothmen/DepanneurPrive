@@ -926,11 +926,11 @@ section {
     flex: 1;
     min-width: 280px;
     max-width: 350px;
-    text-align: center;
+    text-align: left;
     max-width: none; /* retire la limite pour que flex:1 fonctionne */
     flex: 1 1 0;
     min-height: 240px; /* même hauteur pour toutes les cards */
-    text-align: left;
+    
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -946,7 +946,7 @@ section {
     color: #fff;
     box-shadow: 0 4px 24px #fd4a3630;
     font-weight: 700;
-    text-align: center;
+    text-align: left;
     min-height: 240px;
     display: flex;
     justify-content: center;
@@ -1025,7 +1025,7 @@ section {
     .why-card {
         max-width: 100%;
         width: 100%;
-        text-align: center;
+        text-align: left;
         min-width: 0;
         padding: 1.5rem;
     }
@@ -1047,7 +1047,7 @@ section {
         min-width: 0;
         width: 100%;
         max-width: 100%;
-        align-items: center;
+        align-items: left;
         padding: 1.3rem;
     }
     .why-card h3 {
