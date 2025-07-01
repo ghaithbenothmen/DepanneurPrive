@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des cookies - Dépanneurs Privés Assainissement</title>
+    <link rel="icon" type="image/png" href="../assets/logo.png">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Anton:400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        .legal-content {
+            background: #fff;
+            padding: 2rem 0 4rem 0;
+        }
+        .legal-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        .legal-title {
+            font-family: 'Anton', Arial, sans-serif;
+            font-size: 2.5rem;
+            color: var(--premium);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .legal-section {
+            margin-bottom: 2.5rem;
+        }
+        .legal-section h2 {
+            font-family: 'Nunito', Arial, sans-serif;
+            font-size: 1.4rem;
+            color: var(--nav-black);
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--premium);
+            padding-bottom: 0.5rem;
+        }
+        .legal-section h3 {
+            font-family: 'Montserrat', Arial, sans-serif;
+            font-size: 1.1rem;
+            color: var(--nav-black);
+            margin: 1.5rem 0 0.8rem 0;
+            font-weight: 600;
+        }
+        .legal-section p, .legal-section li {
+            font-family: 'Montserrat', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            margin-bottom: 1rem;
+        }
+        .legal-section ul {
+            margin: 1rem 0;
+            padding-left: 2rem;
+        }
+        .legal-section li {
+            margin-bottom: 0.5rem;
+        }
+        .back-btn {
+            display: inline-block;
+            background: var(--premium);
+            color: var(--white);
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-family: 'Nunito', Arial, sans-serif;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            transition: background 0.3s;
+        }
+        .back-btn:hover {
+            background: #c53d2a;
+        }
+        .cookie-banner-demo {
+            background: var(--nav-black);
+            color: var(--white);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+            border-left: 4px solid var(--premium);
+        }
+        .cookie-banner-demo h4 {
+            color: var(--premium);
+            margin-bottom: 0.5rem;
+            font-family: 'Nunito', Arial, sans-serif;
+        }
+         .cookie-banner-demo p {
+            color: var(--white);
+            margin-bottom: 0.5rem;
+            font-family: 'Nunito', Arial, sans-serif;
+            font-size: small;
+        }
+        .cookie-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+        .cookie-btn {
+            background: var(--premium);
+            color: var(--white);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-family: 'Montserrat', Arial, sans-serif;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .cookie-btn:hover {
+            background: #c53d2a;
+        }
+        .cookie-btn.secondary {
+            background: transparent;
+            border: 1px solid var(--white);
+        }
+        .cookie-btn.secondary:hover {
+            background: var(--white);
+            color: var(--nav-black);
+        }
+        .cookie-preferences {
+            background: var(--gray-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+        .cookie-category {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #ddd;
+        }
+        .cookie-category:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+        .cookie-toggle {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 0.5rem;
+        }
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 24px;
+            background: #ccc;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .toggle-switch.active {
+            background: var(--premium);
+        }
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+        .toggle-switch.active::after {
+            transform: translateX(26px);
+        }
+        @media (max-width: 768px) {
+            .legal-title {
+                font-size: 2rem;
+            }
+            .legal-container {
+                padding: 0 1.5rem;
+            }
+            .cookie-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container nav-content wide-navbar">
+            <div class="logo-block">
+                <img src="../assets/logo-bg-txt.png" alt="Dépanneurs Privés Assainissement" class="logo-img">
+            </div>
+            <ul class="nav-links">
+                <li><a href="../index.html">Accueil</a></li>
+                <li><a href="../services.html">Nos Services</a></li>
+                <li><a href="../zones.html">Zones d'intervention</a></li>
+                <li><a href="../index.html#contact">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="https://wa.me/33782184243" class="btn-whatsapp" aria-label="WhatsApp" target="_blank">
+                    <img src="../assets/icons-whatsapp.png" alt="WhatsApp" style="height:24px;width:24px;">
+                </a>
+                <a href="https://wa.me/33782184243" class="btn-urgence">URGENCE 24/7 <span class="arrow">&gt;</span></a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="legal-content">
+        <div class="legal-container">
+           
+            
+            <h1 class="legal-title">🍪 Politique de cookies</h1>
+
+            <div class="legal-section">
+                <p>Ce site utilise des cookies, c'est-à-dire des traceurs déposés et/ou lus sur votre terminal, pour les finalités suivantes :</p>
+                <ul>
+                    <li><strong>Cookies strictement nécessaires</strong> : au bon fonctionnement du site</li>
+                    <li><strong>Cookies de mesure d'audience</strong> (Google Analytics ou autre) : pour comprendre les visites et améliorer le site</li>
+                    <li><strong>Cookies tiers éventuels</strong> : si intégration de vidéos YouTube, cartes Google Maps, boutons réseaux sociaux, etc.</li>
+                </ul>
+            </div>
+
+            <div class="legal-section">
+                <h2>Exemple de bandeau cookies</h2>
+                <div class="cookie-banner-demo">
+                    <h4>🔒 Ce site utilise des cookies</h4>
+                    <p>Ce site utilise des cookies pour améliorer votre expérience, analyser le trafic et personnaliser les contenus.</p>
+                    <p>👉 Vous pouvez <strong>accepter</strong>, <strong>refuser</strong> ou <strong>personnaliser</strong> vos préférences.</p>
+                    <div class="cookie-buttons">
+                        <button class="cookie-btn">Accepter</button>
+                        <button class="cookie-btn secondary">Refuser</button>
+                        <button class="cookie-btn secondary">Personnaliser</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="legal-section">
+                <h2>Gestion des cookies</h2>
+                <p>Lors de votre première visite, un bandeau vous propose d'accepter ou de refuser les cookies.</p>
+                <p>Vous pouvez également modifier vos préférences à tout moment via cette page ou un lien en bas de page intitulé "Gérer mes cookies".</p>
+
+                <h3>Préférences détaillées :</h3>
+                <div class="cookie-preferences">
+                    <div class="cookie-category">
+                        <h4>Cookies strictement nécessaires</h4>
+                        <p>Ces cookies sont indispensables au bon fonctionnement du site. Ils ne peuvent pas être désactivés.</p>
+                        <div class="cookie-toggle">
+                            <span>Toujours actifs</span>
+                            <div class="toggle-switch active"></div>
+                        </div>
+                    </div>
+
+                    <div class="cookie-category">
+                        <h4>Cookies de mesure d'audience</h4>
+                        <p>Ces cookies nous permettent de mesurer l'audience et d'améliorer notre site (Google Analytics, etc.)</p>
+                        <div class="cookie-toggle">
+                            <span>Autoriser</span>
+                            <div class="toggle-switch" onclick="toggleCookie(this)"></div>
+                        </div>
+                    </div>
+
+                    <div class="cookie-category">
+                        <h4>Cookies tiers</h4>
+                        <p>Cookies déposés par des services tiers (YouTube, Google Maps, réseaux sociaux, etc.)</p>
+                        <div class="cookie-toggle">
+                            <span>Autoriser</span>
+                            <div class="toggle-switch" onclick="toggleCookie(this)"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 2rem;">
+                    <button class="cookie-btn" style="font-size: 1.1rem; padding: 0.8rem 2rem;">Sauvegarder mes préférences</button>
+                </div>
+            </div>
+
+            <div class="legal-section">
+                <h2>Comment supprimer les cookies ?</h2>
+                <p>Vous pouvez également gérer les cookies directement depuis votre navigateur :</p>
+                <ul>
+                    <li><strong>Chrome</strong> : Paramètres > Confidentialité et sécurité > Cookies</li>
+                    <li><strong>Firefox</strong> : Paramètres > Vie privée et sécurité > Cookies</li>
+                    <li><strong>Safari</strong> : Préférences > Confidentialité > Cookies</li>
+                    <li><strong>Edge</strong> : Paramètres > Cookies et autorisations de site</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="footer-left" style="display: flex; align-items: flex-start; gap: 0; flex: 1;">
+                <img src="../assets/logo-bg-black.png" alt="Dépanneurs Privés" class="footer-logo-img" style="margin-bottom:0;">
+            </div>
+            <div class="footer-right" style="display: flex; flex-direction: column; align-items: flex-start; gap: 0.5rem;">
+                <div class="footer-contact-row">
+                    <span class="footer-icon"><img src="../assets/icones/icon-localisation.png" alt="Localisation" style="width:22px;height:22px;"></span>
+                    <span>4 Avenue Lelièvre, 93600<br>Aulnay-sous-Bois</span>
+                </div>
+                <div class="footer-contact-row">
+                    <span class="footer-icon"><img src="../assets/icones/icon-tel.png" alt="Téléphone" style="width:22px;height:22px;"></span>
+                    <span>01 80 27 20 27</span>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bar">
+            <div class="footer-bar-left">2025 COPYRIGHT DÉPANNEURS PRIVÉS</div>
+            <div class="footer-bar-links">
+                <a href="../mentions-legales/">MENTIONS LÉGALES</a>
+                <a href="../gestion-cookies/">GESTION DES COOKIES</a>
+                <a href="../politique-confidentialite/">POLITIQUE DE CONFIDENTIALITÉ</a>
+                <a href="../conditions-generales/">CONDITIONS GÉNÉRALES D'UTILISATION</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bouton d'urgence fixe mobile -->
+    <a href="https://wa.me/33782184243" class="mobile-fixed-urgence" target="_blank">
+        <img src="../assets/icons-whatsapp.png" alt="WhatsApp" style="height:24px;width:24px;"> URGENCE
+    </a>
+
+    <script>
+        function toggleCookie(element) {
+            element.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
